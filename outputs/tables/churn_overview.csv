@@ -1,2 +1,2 @@
-customers,churned_customers,retained_customers,churn_rate_pct,average_tenure_months,median_tenure_months,average_monthly_charges,median_monthly_charges
-7043,1869,5174,26.54,32.37,29.0,64.76,70.35
+customers,churned_customers,retained_customers,churn_rate_pct,average_tenure_months,median_tenure_months,average_monthly_charges,median_monthly_charges,churn_monthly_charge_exposure
+7043,1869,5174,26.54,32.37,29.0,64.76,70.35,139130.85

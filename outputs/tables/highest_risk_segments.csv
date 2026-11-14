@@ -1,11 +1,20 @@
-Contract,tenure_group,InternetService,customers,churned_customers,retained_customers,churn_rate_pct,share_of_all_churn_pct
-Month-to-month,0-6 months,Fiber optic,619,459,160,74.15,24.56
-Month-to-month,7-12 months,Fiber optic,297,184,113,61.95,9.84
-Month-to-month,13-24 months,Fiber optic,425,215,210,50.59,11.5
-Month-to-month,0-6 months,DSL,495,245,250,49.49,13.11
-Month-to-month,25-48 months,Fiber optic,521,226,295,43.38,12.09
-Month-to-month,49+ months,Fiber optic,266,78,188,29.32,4.17
-Month-to-month,0-6 months,No,299,76,223,25.42,4.07
-Month-to-month,7-12 months,DSL,195,48,147,24.62,2.57
-Month-to-month,13-24 months,DSL,232,55,177,23.71,2.94
-One year,25-48 months,Fiber optic,154,31,123,20.13,1.66
+Contract,tenure_group,InternetService,customers,churned_customers,churn_monthly_charge_exposure,retained_customers,churn_rate_pct,share_of_all_churn_pct,share_of_churn_monthly_exposure_pct
+Month-to-month,0-6 months,Fiber optic,619,459,37150.15,160,74.15,24.56,26.7
+Month-to-month,7-12 months,Fiber optic,297,184,16028.15,113,61.95,9.84,11.52
+Month-to-month,13-24 months,Fiber optic,425,215,19046.9,210,50.59,11.5,13.69
+Month-to-month,0-6 months,DSL,495,245,10999.65,250,49.49,13.11,7.91
+Month-to-month,25-48 months,Fiber optic,521,226,20762.05,295,43.38,12.09,14.92
+Month-to-month,49+ months,Fiber optic,266,78,7494.75,188,29.32,4.17,5.39
+Month-to-month,0-6 months,No,299,76,1531.5,223,25.42,4.07,1.1
+Month-to-month,7-12 months,DSL,195,48,2352.25,147,24.62,2.57,1.69
+Month-to-month,13-24 months,DSL,232,55,2765.4,177,23.71,2.94,1.99
+One year,25-48 months,Fiber optic,154,31,3039.1,123,20.13,1.66,2.18
+One year,49+ months,Fiber optic,355,67,6926.2,288,18.87,3.58,4.98
+Month-to-month,25-48 months,DSL,227,36,1755.75,191,15.86,1.93,1.26
+One year,25-48 months,DSL,241,22,1436.55,219,9.13,1.18,1.03
+Two year,49+ months,Fiber optic,393,28,2965.55,365,7.12,1.5,2.13
+One year,49+ months,DSL,208,13,871.05,195,6.25,0.7,0.63
+Two year,49+ months,DSL,506,11,751.35,495,2.17,0.59,0.54
+One year,25-48 months,No,123,2,45.7,121,1.63,0.11,0.03
+Two year,25-48 months,No,160,2,49.25,158,1.25,0.11,0.04
+Two year,49+ months,No,364,3,64.25,361,0.82,0.16,0.05

@@ -1,0 +1,9 @@
+PaymentMethod,PaperlessBilling,customers,churned_customers,churn_monthly_charge_exposure,retained_customers,churn_rate_pct,share_of_all_churn_pct,share_of_churn_monthly_exposure_pct
+Electronic check,Yes,1742,867,69672.35,875,49.77,46.39,50.08
+Electronic check,No,623,204,14616.4,419,32.74,10.91,10.51
+Mailed check,Yes,656,179,10719.25,477,27.29,9.58,7.7
+Bank transfer (automatic),Yes,891,186,15540.55,705,20.88,9.95,11.17
+Credit card (automatic),Yes,882,168,13577.85,714,19.05,8.99,9.76
+Mailed check,No,956,129,6084.35,827,13.49,6.9,4.37
+Bank transfer (automatic),No,653,72,4551.35,581,11.03,3.85,3.27
+Credit card (automatic),No,640,64,4368.75,576,10.0,3.42,3.14

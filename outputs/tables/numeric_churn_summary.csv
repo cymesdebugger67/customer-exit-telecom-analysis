@@ -1,0 +1,7 @@
+feature,churn_status,count,mean,median,std,min,max
+tenure,No,5174,37.57,38.0,24.11,0.0,72.0
+tenure,Yes,1869,17.98,10.0,19.53,1.0,72.0
+MonthlyCharges,No,5174,61.27,64.43,31.09,18.25,118.75
+MonthlyCharges,Yes,1869,74.44,79.65,24.67,18.85,118.35
+TotalCharges,No,5163,2555.34,1683.6,2329.46,18.8,8672.45
+TotalCharges,Yes,1869,1531.8,703.55,1890.82,18.85,8684.8

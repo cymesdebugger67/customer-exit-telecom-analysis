@@ -1,18 +1,21 @@
-﻿
-# Python
 .venv/
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
 
-# Testing
 .pytest_cache/
 .pytest_tmp/
 
-# Environment
 .env
 .DS_Store
 
-# Raw source data stays local
+# Raw source data remains local
 data/raw/*
 !data/raw/.gitkeep
+
+# Processed dataset is reproducible and remains local
+data/processed/*
+!data/processed/.gitkeep
+
+# Generated Python package metadata
+*.egg-info/

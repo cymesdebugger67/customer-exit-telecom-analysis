@@ -1,0 +1,27 @@
+dimension,category,customers,churn_rate_pct,ci_95_lower_pct,ci_95_upper_pct
+Contract,Month-to-month,3875,42.71,41.19,44.34
+Contract,One year,1473,11.27,9.64,12.9
+Contract,Two year,1695,2.83,2.06,3.72
+tenure_group,0-6 months,1481,52.94,50.44,55.5
+tenure_group,7-12 months,705,35.89,32.34,39.29
+tenure_group,13-24 months,1024,28.71,25.98,31.55
+tenure_group,25-48 months,1594,20.39,18.44,22.4
+tenure_group,49+ months,2239,9.51,8.35,10.76
+InternetService,DSL,2421,18.96,17.35,20.53
+InternetService,Fiber optic,3096,41.89,40.25,43.64
+InternetService,No,1526,7.4,6.09,8.65
+PaymentMethod,Bank transfer (automatic),1544,16.71,15.03,18.59
+PaymentMethod,Credit card (automatic),1522,15.24,13.47,17.08
+PaymentMethod,Electronic check,2365,45.29,43.21,47.36
+PaymentMethod,Mailed check,1612,19.11,17.31,20.97
+support_security_profile,Neither,2553,48.96,47.04,50.73
+support_security_profile,No internet,1526,7.4,6.16,8.72
+support_security_profile,Security + support,1099,9.01,7.37,10.65
+support_security_profile,Security only,920,21.3,18.7,23.91
+support_security_profile,Support only,945,22.33,19.89,24.98
+protection_level,0 protection services,1267,56.67,54.22,59.59
+protection_level,1 protection services,1467,38.85,36.4,41.24
+protection_level,2 protection services,1372,23.76,21.5,25.95
+protection_level,3 protection services,941,12.43,10.52,14.56
+protection_level,4 protection services,470,5.32,3.19,7.23
+protection_level,No internet,1526,7.4,6.16,8.78

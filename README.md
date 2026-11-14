@@ -1,346 +1,197 @@
-﻿# The Customer Exit — Telecom Analytics
+<div align="center">
 
-## Author
+![The Customer Exit — Telecom Analytics](assets/readme/project_banner.png)
 
-**Cyril James Lunzaga**
+# The Customer Exit — Telecom Analytics
 
----
+**An end-to-end, evidence-led investigation of customer churn patterns in the IBM Telco sample dataset**
 
-## Introduction
+**Created by Cyril James Lunzaga**
 
-Customer churn is an important business concern for subscription-based companies because losing existing customers can affect recurring revenue, acquisition costs, and long-term customer value.
+Python · pandas · SciPy · Matplotlib · Jupyter · pytest
 
-**The Customer Exit — Telecom Analytics** is a medium-sized descriptive data analytics case study based on the IBM Telco Customer Churn sample dataset.
+[Overview](#project-overview) · [Findings](#key-findings) · [Methods](#analytical-methodology) · [Reproduce](#reproduce-the-analysis) · [Limitations](#limitations-and-interpretation)
 
-The project investigates customer churn across contract structure, customer tenure, internet service, billing characteristics, payment behavior, support services, and customer segments. It combines exploratory data analysis, reproducible Python analysis, automated testing, documentation, visualization, and business interpretation.
-
----
-
-## Objectives
-
-The project aims to:
-
-- Measure overall customer churn.
-- Assess dataset quality before analysis.
-- Explore customer, billing, service, and contract characteristics.
-- Compare churn rates across important customer segments.
-- Consider both churn rate and absolute churn volume.
-- Analyze interactions between contract type, tenure, and internet service.
-- Identify customer profiles associated with elevated churn.
-- Produce reproducible analytical tables and visualizations.
-- Translate findings into practical areas for further business investigation.
-- Document methodology, assumptions, data-quality decisions, and limitations.
-- Validate important analytical logic using automated tests.
+</div>
 
 ---
 
-## Dataset
+## Project overview
 
-The project uses the **IBM Telco Customer Churn sample dataset**.
+Which customer groups exhibit the highest observed churn, and which segments account for a meaningful share of customer exits? **The Customer Exit** analyzes the IBM Telco Customer Churn sample to answer these questions through a reproducible descriptive and statistical workflow. It combines source-data auditing, feature engineering, customer segmentation, inferential statistics, visualizations, automated tests, and reporting.
 
-| Metric | Value |
-|---|---:|
-| Customer records | 7,043 |
-| Original variables | 21 |
-| Churned customers | 1,869 |
-| Retained customers | 5,174 |
-| Overall churn rate | 26.54% |
-| Tenure range | 0–72 months |
+**Scope:** Exploratory and observational analytics. This project does **not** train a predictive churn model, measure the results of a retention campaign, or establish causal effects.
 
-The raw dataset is intentionally excluded from Git version control.
+![Project KPI overview](assets/readme/kpi_summary.png)
 
-Expected local path:
+| Dataset measure | Validated result |
+|:--|--:|
+| Customers | **7,043** |
+| Customers who churned | **1,869** |
+| Customers retained | **5,174** |
+| Overall observed churn rate | **26.54%** |
+| Original source columns | **21** |
+| Blank `TotalCharges` values | **11** — retained as missing after numeric conversion |
+
+### Questions this analysis addresses
+
+1. How does observed churn vary by **contract type**, **tenure**, **internet service**, and **payment method**?
+2. Which **combined customer profiles** show both high churn rates and substantial churn volumes?
+3. How strong are the associations between customer attributes and churn, and how uncertain are selected segment estimates?
+4. Which findings warrant further business investigation without overstating the evidence?
+
+## Key findings
+
+| Observed pattern | Result | Interpretation |
+|:--|--:|:--|
+| Month-to-month contracts | **42.71% churn** | Contract structure is strongly associated with observed churn. |
+| Early tenure (0–6 months) | **52.94% churn** | Customer exits are concentrated among newer accounts. |
+| Fiber optic service | **41.89% churn** | Elevated observed rate; not evidence the technology causes churn. |
+| Electronic-check payment | **45.29% churn** | Billing/payment groups differ substantially in this sample. |
+| Month-to-month · 0–6 months · Fiber optic | **74.15% churn** | A combined profile with **459 churned of 619 customers**, representing **24.56%** of all observed churn cases. |
+
+![Churn by contract](outputs/charts/churn_by_contract.png)
+
+![Churn by tenure](outputs/charts/churn_by_tenure.png)
+
+### Multidimensional customer segmentation
+
+The largest actionable-looking rates are not necessarily the largest sources of churn. The analysis therefore reviews **segment size, churned-customer count, churn percentage, and monthly-charge exposure together**. The primary high-risk segment ranking requires at least **100 customers per combined profile**, a practical threshold intended to reduce the emphasis on tiny groups.
+
+![Highest-risk combined customer segments](outputs/charts/highest_risk_segments.png)
+
+> **Important:** “Monthly-charge exposure” is the sum of the recorded `MonthlyCharges` for customers who churned. It is **not** confirmed lost revenue, annualized revenue, profit, or lifetime value. No currency conversion or realized revenue calculation is claimed.
+
+## Statistical evidence
+
+This project supplements descriptive churn comparisons with statistical tests and uncertainty estimates. The results are intended to help compare patterns—not rank independent causes.
+
+| Method | Application | Selected result |
+|:--|:--|:--|
+| Chi-square and **bias-corrected Cramér’s V** | Categorical associations with churn | `protection_level`: **0.412**; original field `Contract`: **0.410** |
+| **Mann–Whitney U** and absolute rank-biserial effect | Churned versus retained numeric distributions | `tenure`: **0.480** (strongest tested numeric separation) |
+| **Bootstrap percentile intervals** | Uncertainty for observed segment churn rates | Month-to-month: **41.19%–44.34%** (95% interval) |
+
+![Categorical association strengths](outputs/charts/categorical_association_strength.png)
+
+Interpretation notes:
+
+- `protection_level` and `support_security_profile` are **engineered from existing service variables**. They are useful composite profiles, but not independent predictors or evidence of causation.
+- Churn is observational, and customer attributes may be interrelated. `TotalCharges`, for example, is strongly related to tenure and recurring charges.
+- Statistical significance is not equivalent to operational importance. Multiple feature comparisons are exploratory; findings should not be treated as independently validated discoveries.
+- The bootstrap intervals quantify resampling variability **within this dataset**. They do not establish that the sample is a random, representative draw from an actual telecom customer population.
+
+For full results, see [Statistical Analysis](docs/statistical_analysis.md), the exported [categorical association table](outputs/tables/categorical_associations.csv), [numeric test table](outputs/tables/numeric_tests.csv), and [bootstrap interval table](outputs/tables/bootstrap_intervals.csv).
+
+## Analytical methodology
+
+![Analysis workflow](assets/readme/analytics_workflow.png)
+
+The pipeline follows a deliberately interpretable workflow:
+
+1. **Audit the raw source** — validate row counts, identifiers, duplicates, schema, and the 11 blank `TotalCharges` entries.
+2. **Clean and prepare** — convert `TotalCharges` to numeric, preserve missing values rather than inventing amounts, and derive the binary churn indicator.
+3. **Engineer interpretable features** — tenure groups, monthly-charge bands, payment indicators, and service-protection profiles.
+4. **Perform exploratory analysis** — inspect distributions and compare churn rates, churn volumes, and customer shares.
+5. **Analyze combined segments** — compare contract, tenure, and internet-service combinations using a minimum-population rule.
+6. **Quantify patterns** — calculate categorical associations, numeric group separation, and bootstrap intervals.
+7. **Generate evidence** — export tables, charts, diagnostics, and Markdown reports.
+8. **Validate outputs** — execute automated tests and repository-level checks.
+
+The analysis is configurable through [`config/analysis_config.json`](config/analysis_config.json). The pipeline's source implementation is in [`src/customer_exit/`](src/customer_exit/).
+
+## Reproduce the analysis
+
+### 1. Requirements
+
+- Python and pip. **Verified locally on Python 3.15.2 (Windows)**; other Python versions have not been verified for this project.
+- Access to the IBM Telco Customer Churn sample CSV.
+
+### 2. Obtain the source dataset
+
+Download [`Telco-Customer-Churn.csv` from IBM's public repository](https://github.com/IBM/telco-customer-churn-on-icp4d/blob/master/data/Telco-Customer-Churn.csv) and save it to:
 
 ```text
 data/raw/Telco-Customer-Churn.csv
 ```
 
----
+The source file is deliberately excluded from Git. The project does not automatically download the file; its local presence is required for pipeline execution.
 
-## Discussion
+### 3. Set up and run (PowerShell)
 
-### Data Quality
-
-The dataset contains:
-
-- 0 duplicate customer IDs
-- 0 duplicate complete rows
-- 0 invalid `tenure` values
-- 0 invalid `MonthlyCharges` values
-- 11 non-numeric `TotalCharges` values
-
-The 11 affected `TotalCharges` entries contain a blank space rather than a valid number.
-
-All 11 affected customers have:
-
-- `tenure = 0`
-- `Churn = No`
-
-These customers are retained in the analysis. Their `TotalCharges` values are converted to missing numeric values rather than being replaced with zero.
-
-`TotalCharges` is not used as a primary segmentation variable in the reported comparisons.
-
-### Exploratory Data Analysis
-
-Two Jupyter notebooks support the analytical workflow:
-
-- `01_data_quality.ipynb` — dataset structure, duplicates, missing and invalid values, numeric conversion, and category validation.
-- `02_exploratory_analysis.ipynb` — churn distribution, numerical distributions, customer segments, service characteristics, billing behavior, and combined-segment exploration.
-
-The notebooks document exploration and analytical reasoning, while `analysis.py` provides the reproducible final pipeline.
-
-### Main Analytical Dimensions
-
-The project analyzes churn by:
-
-- Contract type
-- Customer tenure
-- Internet service
-- Monthly-charge band
-- Payment method
-- Technical support
-- Online security
-- Senior-citizen status
-- Contract × tenure
-- Internet service × contract
-- Contract × tenure × internet service
-
-Each applicable segment reports customer population, churned-customer count, retained-customer count, churn rate, and share of total churn.
-
----
-
-## Execution
-
-### Create the Python Environment
+From the repository root:
 
 ```powershell
 py -3.15 -m venv .venv
-```
-
-### Install Dependencies
-
-```powershell
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-```
-
-### Run the Python Analysis
-
-Place the source dataset at:
-
-```text
-data/raw/Telco-Customer-Churn.csv
-```
-
-Then run:
-
-```powershell
-.\.venv\Scripts\python.exe analysis.py
-```
-
-The pipeline generates:
-
-- 11 analytical CSV tables
-- 8 analytical charts
-- Executive summary
-- Detailed findings report
-
-### Run the Jupyter Notebooks
-
-Open:
-
-```text
-notebooks/01_data_quality.ipynb
-notebooks/02_exploratory_analysis.ipynb
-```
-
-Select the project's `.venv` Python kernel in VS Code and execute the cells from top to bottom.
-
-### Run Automated Tests
-
-```powershell
+.\.venv\Scripts\python.exe -m pip install -e .
+.\.venv\Scripts\python.exe .\scripts\run_pipeline.py
+.\.venv\Scripts\python.exe .\scripts\build_readme_assets.py
 .\.venv\Scripts\python.exe -m pytest -v
+.\.venv\Scripts\python.exe .\scripts\validate_project.py
 ```
 
-The automated test suite validates:
+**Validated project checkpoint:** 22 CSV analysis tables, 15 charts, 3 Markdown reports, 3 README graphics, 6 notebooks, 9 documentation files, and **14 passing tests**. These counts describe the current verified release candidate, not a requirement that every future revision retain the same number of files.
 
-- Data preparation
-- Blank `TotalCharges` handling
-- Group population preservation
-- Valid churn-rate ranges
-- Real-dataset expectations
-- Final output generation
+See [Reproducibility Guide](docs/reproducibility.md) for details. The notebook series is designed for interactive exploration using the project's Python environment as a Jupyter kernel.
 
-Current validated result:
+## Where to look next
 
-**6 tests passed.**
+| Resource | Purpose |
+|:--|:--|
+| [01 · Data audit](notebooks/01_data_audit.ipynb) | Review the raw data, schema, and quality issues. |
+| [02 · Univariate exploration](notebooks/02_univariate_eda.ipynb) | Understand the customer population. |
+| [03 · Bivariate churn analysis](notebooks/03_bivariate_churn_analysis.ipynb) | Compare churn across individual attributes. |
+| [04 · Multivariate segmentation](notebooks/04_multivariate_segmentation.ipynb) | Investigate combined customer profiles. |
+| [05 · Statistical analysis](notebooks/05_statistical_analysis.ipynb) | Examine associations and uncertainty. |
+| [06 · Business insights](notebooks/06_business_insights.ipynb) | Translate analytical results into questions for further investigation. |
+| [Executive summary](reports/executive_summary.md) | Short overview of the principal findings. |
+| [Analytical report](reports/analytical_report.md) | Deeper quantitative results and discussion. |
+| [Portfolio summary](reports/portfolio_summary.md) | Concise project narrative. |
+| [Business rules](docs/business_rules.md) | Metric definitions and interpretation constraints. |
+| [Assumptions and limitations](docs/assumptions_and_limitations.md) | Scope, missingness, and noncausal interpretation. |
 
----
-
-## Results
-
-### Overall Customer Churn
-
-The dataset contains **7,043 customers**, of whom **1,869 churned**.
-
-Overall churn rate:
-
-**26.54%**
-
-### Contract Type
-
-Month-to-month customers have a churn rate of **42.71%**.
-
-This group also accounts for approximately **88.55% of all churned customers**, making it important from both a churn-rate and customer-volume perspective.
-
-### Customer Tenure
-
-Customers with **0–6 months of tenure** have the highest tenure-group churn rate at **52.94%**.
-
-Observed churn decreases across longer-tenure groups.
-
-### Internet Service
-
-Fiber optic customers have an observed churn rate of **41.89%**.
-
-This is substantially higher than the observed churn rates among DSL customers and customers without internet service.
-
-### Monthly Charges
-
-The **70–99.99** monthly-charge group has the highest charge-band churn rate at **37.91%**.
-
-This group also accounts for approximately **54.41% of all churned customers**.
-
-The pattern is not strictly linear. Customers paying `100+` per month have a lower churn rate of **28.30%**.
-
-### Payment Method
-
-Customers using **Electronic check** have an observed churn rate of **45.29%**.
-
-This group accounts for approximately **57.30% of all churn cases**.
-
-### Support and Online Security
-
-Customers without online security have an observed churn rate of approximately **41.77%**.
-
-Customers without technical support show a similar churn rate of approximately **41.64%**.
-
-These service characteristics overlap with internet-service status and should not be interpreted independently as causal drivers.
-
-### Senior-Citizen Status
-
-Senior customers have an observed churn rate of **41.68%**.
-
-However, non-senior customers account for most absolute churn cases because they make up a much larger portion of the dataset.
-
-This illustrates why churn rate and churn volume should be considered together.
-
-### Combined Customer Segment
-
-The highest-risk sufficiently large combined segment identified is:
-
-**Month-to-month contract + 0–6 months tenure + Fiber optic service**
-
-| Metric | Result |
-|---|---:|
-| Customers | 619 |
-| Churned customers | 459 |
-| Churn rate | 74.15% |
-| Share of all churn cases | 24.56% |
-
-This combined analysis provides a stronger retention signal than examining contract, tenure, or internet service independently.
-
----
-
-## Assumptions and Limitations
-
-The project assumes that each customer ID represents one unique customer and that `Churn = Yes` identifies a customer who left the service.
-
-Blank `TotalCharges` values for zero-tenure customers are treated as missing rather than assumed to equal zero.
-
-The analysis is descriptive and observational. It identifies associations but does not establish causation.
-
-The dataset is a historical IBM sample and should not be interpreted as representing the current telecommunications market.
-
-Important variables that are not available may include:
-
-- Customer satisfaction
-- Service outages
-- Competitor pricing
-- Geographic location
-- Acquisition channels
-- Customer-service interactions
-- Promotional history
-
-High churn percentages in small populations can also be misleading. Business prioritization should therefore consider both churn rate and customer volume.
-
-The recommendations in this project identify areas for further investigation rather than proven retention interventions.
-
----
-
-## Conclusion
-
-The analysis identifies several meaningful patterns in customer churn.
-
-Month-to-month customers represent the largest source of churn, customers in the earliest stages of their relationship with the company show elevated churn, fiber optic customers have higher observed churn, and electronic-check customers form another important high-churn segment.
-
-The strongest combined result is the **month-to-month, 0–6 month tenure, fiber optic** customer profile, where **74.15%** of the 619 customers in that segment churned.
-
-These findings suggest that customer lifecycle stage, contract structure, service experience, billing characteristics, payment behavior, and support availability should be considered together when investigating retention opportunities.
-
-Because the analysis is descriptive, the results should guide further investigation and controlled business testing rather than be interpreted as proven causes of churn.
-
----
-
-## Project Structure
+### Repository structure
 
 ```text
-customer-exit-telecom-analytics-project/
-│
-├── README.md
-├── analysis.py
-├── requirements.txt
-├── pytest.ini
-├── .gitignore
-│
-├── data/
-│   ├── raw/
-│   │   └── .gitkeep
-│   └── processed/
-│       └── .gitkeep
-│
-├── notebooks/
-│   ├── 01_data_quality.ipynb
-│   └── 02_exploratory_analysis.ipynb
-│
-├── tests/
-│   └── test_analysis.py
-│
-├── docs/
-│   ├── methodology.md
-│   ├── data_dictionary.md
-│   ├── data_quality.md
-│   └── assumptions_and_limitations.md
-│
-└── outputs/
-    ├── executive_summary.md
-    ├── findings.md
-    ├── charts/
-    └── tables/
+.
+├── assets/readme/          # Project banner, KPI summary, workflow graphic
+├── config/                 # Analysis configuration
+├── data/raw/               # Downloaded source CSV (ignored by Git)
+├── data/processed/         # Generated analytical data (ignored by Git)
+├── docs/                   # Project, methods, quality, and limitations
+├── notebooks/              # Six themed analytical notebooks
+├── outputs/
+│   ├── charts/             # Generated visualizations
+│   ├── diagnostics/        # Data quality audit
+│   └── tables/             # Generated analytical CSV tables
+├── reports/                # Executive, technical, portfolio reports
+├── scripts/                # Pipeline, asset builder, validation commands
+├── src/customer_exit/      # Modular Python analytics package
+├── tests/                  # Automated quality checks
+├── analysis.py             # Backward-compatible pipeline entry point
+├── pyproject.toml          # Package metadata and installation config
+└── requirements.txt        # Environment dependencies
 ```
 
----
+## Practical implications
 
-## Technology
+The descriptive evidence suggests several **investigation priorities**: review onboarding experiences for short-tenure customers, examine the economics and service experience of month-to-month/fiber segments, and investigate support and payment-friction patterns. These are **hypotheses for business follow-up**, not interventions proven to reduce churn. No customer retention experiment or controlled treatment assessment was conducted.
 
-- Python
-- Pandas
-- Matplotlib
-- Jupyter Notebook
-- Pytest
-- VS Code
-- Git
-- GitHub
+## Limitations and interpretation
 
----
+- **Sample data:** This is IBM's public example dataset, not independently verified production data from a real telecom operator.
+- **Cross-sectional snapshot:** The records lack event-level histories or temporal follow-up required to evaluate future outcomes or changes over time.
+- **Observational design:** Associations cannot establish cause and effect; segment profiles can reflect overlapping characteristics and confounding.
+- **Missing values:** Eleven blank `TotalCharges` entries are converted to missing numeric values; customers are retained and analyses requiring `TotalCharges` use available values.
+- **No predictive validation:** This is a descriptive/statistical analysis, not a trained or independently evaluated churn prediction system.
+- **No realized revenue estimate:** Monthly-charge exposure is descriptive and must not be described as booked financial loss.
+- **Exploratory testing:** Reported significance levels are not a substitute for adjustment for multiple comparisons, independent replication, or intervention testing.
 
-## Project Status
+See [Methodology](docs/methodology.md), [Data Quality](docs/data_quality.md), and [Assumptions and Limitations](docs/assumptions_and_limitations.md).
+
+## Data attribution and author
+
+**Data source:** IBM, [Telco Customer Churn sample CSV](https://github.com/IBM/telco-customer-churn-on-icp4d/blob/master/data/Telco-Customer-Churn.csv). IBM's public example dataset is credited as the data source; the analysis, code structure, figures, and interpretation in this repository form this independent portfolio case study.
+
+**Author:** Cyril James Lunzaga

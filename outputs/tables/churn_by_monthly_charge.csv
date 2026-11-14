@@ -1,5 +1,5 @@
-monthly_charge_band,customers,churned_customers,retained_customers,churn_rate_pct,share_of_all_churn_pct
-70-99.99,2683,1017,1666,37.91,54.41
-100+,908,257,651,28.3,13.75
-40-69.99,1615,382,1233,23.65,20.44
-Under 40,1837,213,1624,11.59,11.4
+monthly_charge_band,customers,churned_customers,churn_monthly_charge_exposure,retained_customers,churn_rate_pct,share_of_all_churn_pct,share_of_churn_monthly_exposure_pct
+70-99.99,2683,1017,86016.9,1666,37.91,54.41,61.82
+100+,908,257,26964.1,651,28.3,13.75,19.38
+40-69.99,1615,382,20806.65,1233,23.65,20.44,14.95
+Under 40,1837,213,5343.2,1624,11.59,11.4,3.84
