@@ -1,5 +1,3 @@
-"""End-to-end analytics pipeline."""
-
 from __future__ import annotations
 
 import json

@@ -1,5 +1,3 @@
-"""Run the full customer-exit analytics pipeline."""
-
 from pathlib import Path
 import sys
 

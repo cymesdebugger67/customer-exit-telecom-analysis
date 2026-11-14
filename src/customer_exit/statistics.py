@@ -1,5 +1,3 @@
-"""Inferential statistics and confidence intervals."""
-
 from __future__ import annotations
 
 import numpy as np
