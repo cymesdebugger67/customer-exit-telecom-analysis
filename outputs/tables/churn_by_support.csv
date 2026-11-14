@@ -1,0 +1,7 @@
+dimension,category,customers,churned_customers,retained_customers,churn_rate_pct,share_of_all_churn_pct
+OnlineSecurity,No,3498,1461,2037,41.77,78.17
+TechSupport,No,3473,1446,2027,41.64,77.37
+TechSupport,Yes,2044,310,1734,15.17,16.59
+OnlineSecurity,Yes,2019,295,1724,14.61,15.78
+TechSupport,No internet service,1526,113,1413,7.4,6.05
+OnlineSecurity,No internet service,1526,113,1413,7.4,6.05

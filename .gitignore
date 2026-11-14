@@ -1,7 +1,15 @@
-﻿.venv/
+﻿
+# Python
+.venv/
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
+
+# Testing
+.pytest_cache/
+.pytest_tmp/
+
+# Environment
 .env
 .DS_Store
 

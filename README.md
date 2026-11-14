@@ -1,31 +1,67 @@
 ﻿# The Customer Exit — Telecom Analytics
 
-A descriptive data analytics project examining customer churn patterns in a historical IBM telecommunications customer sample.
+## Author
 
-## Project Overview
+**Cyril James Lunzaga**
 
-Customer churn is an important business concern for subscription-based companies. This project explores how churn varies across contract type, customer tenure, and internet service.
+---
 
-## Business Questions
+## Introduction
 
-1. How does churn vary across contract types?
-2. How does customer tenure relate to churn?
-3. Which internet service groups show higher observed churn rates?
+Customer churn is an important business concern for subscription-based companies because losing existing customers can affect recurring revenue, acquisition costs, and long-term customer value.
+
+**The Customer Exit — Telecom Analytics** is a medium-sized descriptive data analytics case study based on the IBM Telco Customer Churn sample dataset.
+
+The project investigates customer churn across contract structure, customer tenure, internet service, billing characteristics, payment behavior, support services, and customer segments. It combines exploratory data analysis, reproducible Python analysis, automated testing, documentation, visualization, and business interpretation.
+
+---
+
+## Objectives
+
+The project aims to:
+
+- Measure overall customer churn.
+- Assess dataset quality before analysis.
+- Explore customer, billing, service, and contract characteristics.
+- Compare churn rates across important customer segments.
+- Consider both churn rate and absolute churn volume.
+- Analyze interactions between contract type, tenure, and internet service.
+- Identify customer profiles associated with elevated churn.
+- Produce reproducible analytical tables and visualizations.
+- Translate findings into practical areas for further business investigation.
+- Document methodology, assumptions, data-quality decisions, and limitations.
+- Validate important analytical logic using automated tests.
+
+---
 
 ## Dataset
 
-**Source:** IBM Telco Customer Churn sample dataset
+The project uses the **IBM Telco Customer Churn sample dataset**.
 
-- Customer records: 7,043
-- Variables: 21
-- Target variable: `Churn`
-- Tenure range: 0 to 72 months
+| Metric | Value |
+|---|---:|
+| Customer records | 7,043 |
+| Original variables | 21 |
+| Churned customers | 1,869 |
+| Retained customers | 5,174 |
+| Overall churn rate | 26.54% |
+| Tenure range | 0–72 months |
 
-The raw dataset is intentionally excluded from this repository.
+The raw dataset is intentionally excluded from Git version control.
 
-## Data Quality
+Expected local path:
 
-The quality review found:
+```text
+data/raw/Telco-Customer-Churn.csv
+```
+
+---
+
+## Discussion
+
+### Data Quality
+
+The dataset contains:
 
 - 0 duplicate customer IDs
 - 0 duplicate complete rows
@@ -33,132 +69,278 @@ The quality review found:
 - 0 invalid `MonthlyCharges` values
 - 11 non-numeric `TotalCharges` values
 
-The 11 affected `TotalCharges` entries contain a single blank space. All 11 affected customers have zero months of tenure and are labeled as non-churned.
+The 11 affected `TotalCharges` entries contain a blank space rather than a valid number.
 
-These customers are retained in the analysis. Their `TotalCharges` values are treated as missing numeric values rather than replaced with zero.
+All 11 affected customers have:
 
-`TotalCharges` is not used in the three primary churn comparisons.
+- `tenure = 0`
+- `Churn = No`
+
+These customers are retained in the analysis. Their `TotalCharges` values are converted to missing numeric values rather than being replaced with zero.
+
+`TotalCharges` is not used as a primary segmentation variable in the reported comparisons.
+
+### Exploratory Data Analysis
+
+Two Jupyter notebooks support the analytical workflow:
+
+- `01_data_quality.ipynb` — dataset structure, duplicates, missing and invalid values, numeric conversion, and category validation.
+- `02_exploratory_analysis.ipynb` — churn distribution, numerical distributions, customer segments, service characteristics, billing behavior, and combined-segment exploration.
+
+The notebooks document exploration and analytical reasoning, while `analysis.py` provides the reproducible final pipeline.
+
+### Main Analytical Dimensions
+
+The project analyzes churn by:
+
+- Contract type
+- Customer tenure
+- Internet service
+- Monthly-charge band
+- Payment method
+- Technical support
+- Online security
+- Senior-citizen status
+- Contract × tenure
+- Internet service × contract
+- Contract × tenure × internet service
+
+Each applicable segment reports customer population, churned-customer count, retained-customer count, churn rate, and share of total churn.
+
+---
+
+## Execution
+
+### Create the Python Environment
+
+```powershell
+py -3.15 -m venv .venv
+```
+
+### Install Dependencies
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+### Run the Python Analysis
+
+Place the source dataset at:
+
+```text
+data/raw/Telco-Customer-Churn.csv
+```
+
+Then run:
+
+```powershell
+.\.venv\Scripts\python.exe analysis.py
+```
+
+The pipeline generates:
+
+- 11 analytical CSV tables
+- 8 analytical charts
+- Executive summary
+- Detailed findings report
+
+### Run the Jupyter Notebooks
+
+Open:
+
+```text
+notebooks/01_data_quality.ipynb
+notebooks/02_exploratory_analysis.ipynb
+```
+
+Select the project's `.venv` Python kernel in VS Code and execute the cells from top to bottom.
+
+### Run Automated Tests
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest -v
+```
+
+The automated test suite validates:
+
+- Data preparation
+- Blank `TotalCharges` handling
+- Group population preservation
+- Valid churn-rate ranges
+- Real-dataset expectations
+- Final output generation
+
+Current validated result:
+
+**6 tests passed.**
+
+---
 
 ## Results
 
-### Churn by Contract Type
+### Overall Customer Churn
 
-| Contract | Customers | Churn Rate |
-|---|---:|---:|
-| Month-to-month | 3,875 | 42.71% |
-| One year | 1,473 | 11.27% |
-| Two year | 1,695 | 2.83% |
+The dataset contains **7,043 customers**, of whom **1,869 churned**.
 
-Month-to-month customers show the highest observed churn rate.
+Overall churn rate:
 
-![Churn by contract](outputs/charts/churn_by_contract.png)
+**26.54%**
 
-### Churn by Customer Tenure
+### Contract Type
 
-| Tenure Group | Customers | Churn Rate |
-|---|---:|---:|
-| 0-6 months | 1,481 | 52.94% |
-| 7-12 months | 705 | 35.89% |
-| 13-24 months | 1,024 | 28.71% |
-| 25-48 months | 1,594 | 20.39% |
-| 49+ months | 2,239 | 9.51% |
+Month-to-month customers have a churn rate of **42.71%**.
 
-Observed churn decreases consistently across longer-tenure groups.
+This group also accounts for approximately **88.55% of all churned customers**, making it important from both a churn-rate and customer-volume perspective.
 
-![Churn by tenure](outputs/charts/churn_by_tenure.png)
+### Customer Tenure
 
-### Churn by Internet Service
+Customers with **0–6 months of tenure** have the highest tenure-group churn rate at **52.94%**.
 
-| Internet Service | Customers | Churn Rate |
-|---|---:|---:|
-| Fiber optic | 3,096 | 41.89% |
-| DSL | 2,421 | 18.96% |
-| No internet service | 1,526 | 7.40% |
+Observed churn decreases across longer-tenure groups.
 
-Fiber optic customers show the highest observed churn rate among the internet-service groups.
+### Internet Service
 
-![Churn by internet service](outputs/charts/churn_by_internet.png)
+Fiber optic customers have an observed churn rate of **41.89%**.
 
-## Key Findings
+This is substantially higher than the observed churn rates among DSL customers and customers without internet service.
 
-The overall churn rate in the sample is **26.54%**.
+### Monthly Charges
 
-Three descriptive patterns stand out:
+The **70–99.99** monthly-charge group has the highest charge-band churn rate at **37.91%**.
 
-- Month-to-month customers have substantially higher observed churn than customers with one-year or two-year contracts.
-- Customers in their first six months have the highest observed churn among the tenure groups.
-- Fiber optic customers have substantially higher observed churn than DSL customers and customers without internet service.
+This group also accounts for approximately **54.41% of all churned customers**.
 
-These findings describe associations within the sample and should not be interpreted as causal relationships.
+The pattern is not strictly linear. Customers paying `100+` per month have a lower churn rate of **28.30%**.
 
-## Business Recommendations
+### Payment Method
 
-1. Review the customer experience during the first six months of service.
-2. Investigate retention opportunities among month-to-month customers.
-3. Examine pricing, support, service experience, and other possible contributors to churn among fiber optic customers.
+Customers using **Electronic check** have an observed churn rate of **45.29%**.
 
-Any proposed retention initiative should be independently evaluated before its effectiveness is assumed.
+This group accounts for approximately **57.30% of all churn cases**.
+
+### Support and Online Security
+
+Customers without online security have an observed churn rate of approximately **41.77%**.
+
+Customers without technical support show a similar churn rate of approximately **41.64%**.
+
+These service characteristics overlap with internet-service status and should not be interpreted independently as causal drivers.
+
+### Senior-Citizen Status
+
+Senior customers have an observed churn rate of **41.68%**.
+
+However, non-senior customers account for most absolute churn cases because they make up a much larger portion of the dataset.
+
+This illustrates why churn rate and churn volume should be considered together.
+
+### Combined Customer Segment
+
+The highest-risk sufficiently large combined segment identified is:
+
+**Month-to-month contract + 0–6 months tenure + Fiber optic service**
+
+| Metric | Result |
+|---|---:|
+| Customers | 619 |
+| Churned customers | 459 |
+| Churn rate | 74.15% |
+| Share of all churn cases | 24.56% |
+
+This combined analysis provides a stronger retention signal than examining contract, tenure, or internet service independently.
+
+---
+
+## Assumptions and Limitations
+
+The project assumes that each customer ID represents one unique customer and that `Churn = Yes` identifies a customer who left the service.
+
+Blank `TotalCharges` values for zero-tenure customers are treated as missing rather than assumed to equal zero.
+
+The analysis is descriptive and observational. It identifies associations but does not establish causation.
+
+The dataset is a historical IBM sample and should not be interpreted as representing the current telecommunications market.
+
+Important variables that are not available may include:
+
+- Customer satisfaction
+- Service outages
+- Competitor pricing
+- Geographic location
+- Acquisition channels
+- Customer-service interactions
+- Promotional history
+
+High churn percentages in small populations can also be misleading. Business prioritization should therefore consider both churn rate and customer volume.
+
+The recommendations in this project identify areas for further investigation rather than proven retention interventions.
+
+---
+
+## Conclusion
+
+The analysis identifies several meaningful patterns in customer churn.
+
+Month-to-month customers represent the largest source of churn, customers in the earliest stages of their relationship with the company show elevated churn, fiber optic customers have higher observed churn, and electronic-check customers form another important high-churn segment.
+
+The strongest combined result is the **month-to-month, 0–6 month tenure, fiber optic** customer profile, where **74.15%** of the 619 customers in that segment churned.
+
+These findings suggest that customer lifecycle stage, contract structure, service experience, billing characteristics, payment behavior, and support availability should be considered together when investigating retention opportunities.
+
+Because the analysis is descriptive, the results should guide further investigation and controlled business testing rather than be interpreted as proven causes of churn.
+
+---
 
 ## Project Structure
 
-    customer-exit-telecom-analytics-project/
-    |
-    |-- analysis.py
-    |-- requirements.txt
-    |-- README.md
-    |-- .gitignore
-    |
-    |-- data/
-    |   `-- raw/
-    |       `-- .gitkeep
-    |
-    `-- outputs/
-        |-- findings.md
-        |-- charts/
-        |   |-- churn_by_contract.png
-        |   |-- churn_by_internet.png
-        |   `-- churn_by_tenure.png
-        |
-        `-- tables/
-            |-- churn_by_contract.csv
-            |-- churn_by_internet.csv
-            `-- churn_by_tenure.csv
+```text
+customer-exit-telecom-analytics-project/
+│
+├── README.md
+├── analysis.py
+├── requirements.txt
+├── pytest.ini
+├── .gitignore
+│
+├── data/
+│   ├── raw/
+│   │   └── .gitkeep
+│   └── processed/
+│       └── .gitkeep
+│
+├── notebooks/
+│   ├── 01_data_quality.ipynb
+│   └── 02_exploratory_analysis.ipynb
+│
+├── tests/
+│   └── test_analysis.py
+│
+├── docs/
+│   ├── methodology.md
+│   ├── data_dictionary.md
+│   ├── data_quality.md
+│   └── assumptions_and_limitations.md
+│
+└── outputs/
+    ├── executive_summary.md
+    ├── findings.md
+    ├── charts/
+    └── tables/
+```
 
-## Reproducing the Analysis
-
-Create the Python environment:
-
-    py -3.15 -m venv .venv
-
-Install dependencies:
-
-    .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-
-Place the IBM Telco Customer Churn dataset at:
-
-    data/raw/Telco-Customer-Churn.csv
-
-Run the analysis:
-
-    .\.venv\Scripts\python.exe analysis.py
-
-The script regenerates the summary tables, charts, and findings inside `outputs/`.
+---
 
 ## Technology
 
 - Python
 - Pandas
 - Matplotlib
+- Jupyter Notebook
+- Pytest
 - VS Code
 - Git
 - GitHub
 
-## Limitations
+---
 
-This project uses a historical IBM sample dataset.
-
-The analysis describes relationships within that dataset. It does not establish causation, represent current telecommunications market conditions, or validate the effectiveness of any proposed retention intervention.
-
-## Status
-
-Core descriptive analysis complete.
+## Project Status

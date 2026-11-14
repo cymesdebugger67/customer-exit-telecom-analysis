@@ -1,0 +1,5 @@
+monthly_charge_band,customers,churned_customers,retained_customers,churn_rate_pct,share_of_all_churn_pct
+70-99.99,2683,1017,1666,37.91,54.41
+100+,908,257,651,28.3,13.75
+40-69.99,1615,382,1233,23.65,20.44
+Under 40,1837,213,1624,11.59,11.4
