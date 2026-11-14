@@ -1,4 +1,4 @@
-Contract,customers,churned_customers,retained_customers,churn_rate_pct,share_of_all_churn_pct
-Month-to-month,3875,1655,2220,42.71,88.55
-One year,1473,166,1307,11.27,8.88
-Two year,1695,48,1647,2.83,2.57
+Contract,customers,churned_customers,churn_monthly_charge_exposure,retained_customers,churn_rate_pct,share_of_all_churn_pct,share_of_churn_monthly_exposure_pct
+Month-to-month,3875,1655,120847.1,2220,42.71,88.55,86.86
+One year,1473,166,14118.45,1307,11.27,8.88,10.15
+Two year,1695,48,4165.3,1647,2.83,2.57,2.99

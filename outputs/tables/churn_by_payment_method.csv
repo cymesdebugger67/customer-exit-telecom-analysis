@@ -1,5 +1,5 @@
-PaymentMethod,customers,churned_customers,retained_customers,churn_rate_pct,share_of_all_churn_pct
-Electronic check,2365,1071,1294,45.29,57.3
-Mailed check,1612,308,1304,19.11,16.48
-Bank transfer (automatic),1544,258,1286,16.71,13.8
-Credit card (automatic),1522,232,1290,15.24,12.41
+PaymentMethod,customers,churned_customers,churn_monthly_charge_exposure,retained_customers,churn_rate_pct,share_of_all_churn_pct,share_of_churn_monthly_exposure_pct
+Electronic check,2365,1071,84288.75,1294,45.29,57.3,60.58
+Mailed check,1612,308,16803.6,1304,19.11,16.48,12.08
+Bank transfer (automatic),1544,258,20091.9,1286,16.71,13.8,14.44
+Credit card (automatic),1522,232,17946.6,1290,15.24,12.41,12.9

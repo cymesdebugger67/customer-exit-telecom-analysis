@@ -1,0 +1,4 @@
+feature,churned_n,retained_n,churned_median,retained_median,mann_whitney_u,p_value,rank_biserial_abs,significant_0_05
+tenure,1869,5174,10.0,38.0,2515538.0,2.419635517951866e-208,0.4797,True
+TotalCharges,1869,5163,703.55,1683.6,3360665.0,1.9959848938845826e-84,0.3035,True
+MonthlyCharges,1869,5174,79.65,64.43,6003125.5,3.311627651988585e-54,0.2416,True

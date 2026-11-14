@@ -1,0 +1,3 @@
+Partner,customers,churned_customers,churn_monthly_charge_exposure,retained_customers,churn_rate_pct,share_of_all_churn_pct,share_of_churn_monthly_exposure_pct
+No,3641,1200,85741.15,2441,32.96,64.21,61.63
+Yes,3402,669,53389.7,2733,19.66,35.79,38.37

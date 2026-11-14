@@ -1,6 +1,6 @@
-tenure_group,customers,churned_customers,retained_customers,churn_rate_pct,share_of_all_churn_pct
-0-6 months,1481,784,697,52.94,41.95
-7-12 months,705,253,452,35.89,13.54
-13-24 months,1024,294,730,28.71,15.73
-25-48 months,1594,325,1269,20.39,17.39
-49+ months,2239,213,2026,9.51,11.4
+tenure_group,customers,churned_customers,churn_monthly_charge_exposure,retained_customers,churn_rate_pct,share_of_all_churn_pct,share_of_churn_monthly_exposure_pct
+0-6 months,1481,784,49896.1,697,52.94,41.95,35.86
+7-12 months,705,253,19058.15,452,35.89,13.54,13.7
+13-24 months,1024,294,23081.65,730,28.71,15.73,16.59
+25-48 months,1594,325,27462.5,1269,20.39,17.39,19.74
+49+ months,2239,213,19632.45,2026,9.51,11.4,14.11

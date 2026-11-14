@@ -1,0 +1,11 @@
+{
+  "rows": 7043,
+  "columns": 21,
+  "unique_customer_ids": 7043,
+  "duplicate_customer_ids": 0,
+  "duplicate_rows": 0,
+  "invalid_total_charges": 11,
+  "zero_tenure_customers": 11,
+  "invalid_total_zero_tenure": 11,
+  "invalid_total_non_churned": 11
+}

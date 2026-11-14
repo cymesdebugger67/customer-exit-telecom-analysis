@@ -1,0 +1,6 @@
+support_security_profile,customers,churned_customers,churn_monthly_charge_exposure,retained_customers,churn_rate_pct,share_of_all_churn_pct,share_of_churn_monthly_exposure_pct
+Neither,2553,1250,95152.55,1303,48.96,66.88,68.39
+Support only,945,211,17610.2,734,22.33,11.29,12.66
+Security only,920,196,15557.25,724,21.3,10.49,11.18
+Security + support,1099,99,8509.25,1000,9.01,5.3,6.12
+No internet,1526,113,2301.6,1413,7.4,6.05,1.65

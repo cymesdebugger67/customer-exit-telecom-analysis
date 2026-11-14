@@ -1,0 +1,60 @@
+{
+  "source_path": "data/raw/Telco-Customer-Churn.csv",
+  "processed_path": "data/processed/telco_customer_churn_cleaned.csv",
+  "output_dir": "outputs",
+  "report_dir": "reports",
+  "asset_dir": "assets/readme",
+  "minimum_segment_size": 100,
+  "bootstrap_iterations": 1000,
+  "bootstrap_seed": 42,
+  "tenure_bins": [
+    -1,
+    6,
+    12,
+    24,
+    48,
+    null
+  ],
+  "tenure_labels": [
+    "0-6 months",
+    "7-12 months",
+    "13-24 months",
+    "25-48 months",
+    "49+ months"
+  ],
+  "charge_bins": [
+    0,
+    40,
+    70,
+    100,
+    null
+  ],
+  "charge_labels": [
+    "Under 40",
+    "40-69.99",
+    "70-99.99",
+    "100+"
+  ],
+  "categorical_features": [
+    "gender",
+    "senior_status",
+    "Partner",
+    "Dependents",
+    "InternetService",
+    "OnlineSecurity",
+    "TechSupport",
+    "Contract",
+    "PaperlessBilling",
+    "PaymentMethod",
+    "tenure_group",
+    "monthly_charge_band",
+    "support_security_profile",
+    "protection_level",
+    "automatic_payment"
+  ],
+  "numeric_features": [
+    "tenure",
+    "MonthlyCharges",
+    "TotalCharges"
+  ]
+}
