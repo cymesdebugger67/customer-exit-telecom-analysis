@@ -32,3 +32,8 @@
 | tenure_group | Customer lifecycle grouping based on tenure |
 | monthly_charge_band | Monthly billing range used for segmentation |
 | senior_status | Readable version of SeniorCitizen |
+| automatic_payment | Payment category derived from PaymentMethod: Automatic or Manual |
+| internet_protection_count | Count of enabled OnlineSecurity, OnlineBackup, DeviceProtection, and TechSupport services (0–4) |
+| protection_level | Internet protection category based on the protection service count; No internet is classified separately |
+| support_security_profile | Combined OnlineSecurity and TechSupport status: both, security only, support only, neither, or no internet |
+| streaming_service_count | Number of enabled streaming services across StreamingTV and StreamingMovies (0–2) |

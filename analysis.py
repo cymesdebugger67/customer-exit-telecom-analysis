@@ -1,5 +1,3 @@
-"""Compatibility entry point for the full analytics pipeline."""
-
 from pathlib import Path
 import sys
 

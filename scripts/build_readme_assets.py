@@ -1,5 +1,3 @@
-"""Generate repository graphics for README presentation."""
-
 from pathlib import Path
 
 import matplotlib.pyplot as plt

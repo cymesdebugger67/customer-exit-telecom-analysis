@@ -1,5 +1,3 @@
-"""Validate the complete large analytics project."""
-
 from pathlib import Path
 import json
 import subprocess
